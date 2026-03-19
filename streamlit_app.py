@@ -604,7 +604,7 @@ def show_prediction_app():
             st.subheader("Uploaded Image")
             # Display uploaded image
             image = Image.open(uploaded_file)
-            st.image(image, use_container_width=True)
+            st.image(image, width='stretch')
         
         with col2:
             st.subheader("Prediction Results")
@@ -774,7 +774,7 @@ def show_samples_page():
                         try:
                             if os.path.exists(image_path):
                                 img = Image.open(image_path)
-                                st.image(img, use_container_width=True)
+                                st.image(img, width='stretch')
                                 
                                 bmi = sample['BMI']
                                 
