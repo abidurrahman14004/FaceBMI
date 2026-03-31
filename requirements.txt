@@ -5,8 +5,8 @@ streamlit>=1.28.0,<2.0.0
 Pillow>=10.0.0
 
 # ── Data processing ──────────────────────────────────────────────────────────
-# numpy pinned <2.0 for mediapipe + torch compatibility on Python 3.10
-numpy>=1.24.0,<2.0.0
+# numpy: mediapipe 0.10.30+ supports numpy 2.x; allow 2.x for Python 3.12 compatibility
+numpy>=1.26.0
 pandas>=2.0.0
 scipy>=1.11.0
 scikit-learn>=1.3.0
@@ -18,10 +18,8 @@ torch>=2.0.0
 torchvision>=0.15.0
 
 # ── MediaPipe ────────────────────────────────────────────────────────────────
-# 0.10.14 is the last release with Python 3.10 wheels officially on PyPI.
-# Requires system libs: libgl1, libglib2.0-0, libsm6, libxrender1, libxext6
-# (listed in packages.txt for Streamlit Cloud)
-mediapipe==0.10.14
+# 0.10.30+ has Python 3.12 wheels on PyPI; 0.10.14 was Python ≤3.11 only
+mediapipe>=0.10.30,<0.11.0
 
 # ── HTTP ─────────────────────────────────────────────────────────────────────
 requests>=2.31.0
