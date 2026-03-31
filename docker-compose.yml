@@ -2,10 +2,31 @@ version: '3.8'
 
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: facbemi-net:latest
+    container_name: facbemi-net-app
     ports:
       - "8501:8501"
     environment:
       - STREAMLIT_SERVER_PORT=8501
       - STREAMLIT_SERVER_ADDRESS=0.0.0.0
-    restart: always
+      - STREAMLIT_SERVER_HEADLESS=true
+      - STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+      # Suppress OpenMP warnings from torch/mediapipe
+      - OMP_NUM_THREADS=1
+      - TOKENIZERS_PARALLELISM=false
+    volumes:
+      # Mount models directory so the .pth file is accessible
+      - ./models:/app/models:ro
+      # Mount samples directory
+      - ./samples:/app/samples:ro
+    restart: unless-stopped
+    # Give the app enough time to load the model on first start
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
